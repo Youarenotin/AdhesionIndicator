@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="AdhesionIndicator">
+        <attr name="textcolor" format="reference"/>
+        <attr name="selectedtextcolor" format="reference"/>
+        <attr name="textbg" format="reference"/>
+        <attr name="textsize" format="dimension"/>
+        <attr name="indicatorcolor" format="reference"/>
+        <attr name="indicatorcolors" format="reference"/>
+        <attr name="radiusmax" format="dimension"/>
+        <attr name="radiusmin" format="dimension"/>
+    </declare-styleable>
+</resources>
