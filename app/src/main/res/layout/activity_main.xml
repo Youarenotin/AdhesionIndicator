@@ -19,11 +19,13 @@
             android:textColor="@android:color/secondary_text_dark"/>
     </android.support.v7.widget.Toolbar>
     <com.youarenotin.adhesionindicator.AdhesionIndicator
+        android:id="@+id/indicator"
         android:layout_width="match_parent"
         android:layout_height="100dp">
     </com.youarenotin.adhesionindicator.AdhesionIndicator>
 
     <com.youarenotin.adhesionindicator.viewpager.ScrollerViewPager
+        android:id="@+id/vp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </com.youarenotin.adhesionindicator.viewpager.ScrollerViewPager>

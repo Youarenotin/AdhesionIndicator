@@ -54,7 +54,7 @@ public class SpringView extends View {
     }
 
     private void init(){
-        setAlpha(0.5f);
+//        setAlpha(0.5f);
 
         headPoint = new Circle();
         footPoint = new Circle();
@@ -63,8 +63,8 @@ public class SpringView extends View {
 
         paint = new Paint();
         paint.setAntiAlias(true);
-        paint.setStyle(Paint.Style.FILL_AND_STROKE);
-        paint.setStrokeWidth(5);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(1);
         paint.setColor(Color.BLUE);
     }
 
