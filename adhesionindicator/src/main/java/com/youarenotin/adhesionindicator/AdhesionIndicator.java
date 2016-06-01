@@ -43,7 +43,7 @@ public class AdhesionIndicator extends FrameLayout {
     }
 
     private void initAttrs(AttributeSet attrs) {
-        textColor =R.color.default_text_color;
+        textColor = R.color.default_text_color;
         selected_textColor = R.color.default_text_color_selected;
         indicatorBgColor = R.color.default_indicator_bg;
         textSize = getResources().getDimension(R.dimen.default_text_size);
@@ -76,7 +76,13 @@ public class AdhesionIndicator extends FrameLayout {
             // of a programmatically initiated smooth scroll or a user initiated touch scroll.
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                if (position<tabs.size()-1){
+                    //radius
 
+                }
+                else{
+
+                }
             }
             //This method will be invoked when a new page becomes selected. Animation is not
             //necessarily complete.

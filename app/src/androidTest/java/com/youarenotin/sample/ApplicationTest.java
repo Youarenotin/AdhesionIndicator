@@ -1,4 +1,4 @@
-package com.youarenotin.adhesionindicator;
+package com.youarenotin.sample;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
