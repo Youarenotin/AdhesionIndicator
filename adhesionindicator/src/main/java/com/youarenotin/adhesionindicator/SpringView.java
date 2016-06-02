@@ -28,10 +28,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
 
-/**
- * Created by chenupt@gmail.com on 2015/1/31.
- * Description : Draw a head point and foot point.
- */
 public class SpringView extends View {
 
     private Paint paint;
@@ -53,8 +49,8 @@ public class SpringView extends View {
         init();
     }
 
-    private void init(){
-        setAlpha(0.5f);
+    private void init() {
+        setAlpha(0);
 
         headPoint = new Circle();
         footPoint = new Circle();
@@ -63,18 +59,18 @@ public class SpringView extends View {
 
         paint = new Paint();
         paint.setAntiAlias(true);
-        paint.setStyle(Paint.Style.FILL_AND_STROKE);
+        paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(5);
         paint.setColor(Color.YELLOW);
     }
 
-    private void makePath(){
+    private void makePath() {
 
-        float headOffsetX = (float) (headPoint.getRadius()*Math.sin(Math.atan((footPoint.getY()-headPoint.getY()) / (footPoint.getX()-headPoint.getX()))));
-        float headOffsetY = (float) (headPoint.getRadius()*Math.cos(Math.atan((footPoint.getY()-headPoint.getY()) / (footPoint.getX()-headPoint.getX()))));
+        float headOffsetX = (float) (headPoint.getRadius() * Math.sin(Math.atan((footPoint.getY() - headPoint.getY()) / (footPoint.getX() - headPoint.getX()))));
+        float headOffsetY = (float) (headPoint.getRadius() * Math.cos(Math.atan((footPoint.getY() - headPoint.getY()) / (footPoint.getX() - headPoint.getX()))));
 
-        float footOffsetX = (float) (footPoint.getRadius()*Math.sin(Math.atan((footPoint.getY()-headPoint.getY()) / (footPoint.getX()-headPoint.getX()))));
-        float footOffsetY = (float) (footPoint.getRadius()*Math.cos(Math.atan((footPoint.getY()-headPoint.getY()) / (footPoint.getX()-headPoint.getX()))));
+        float footOffsetX = (float) (footPoint.getRadius() * Math.sin(Math.atan((footPoint.getY() - headPoint.getY()) / (footPoint.getX() - headPoint.getX()))));
+        float footOffsetY = (float) (footPoint.getRadius() * Math.cos(Math.atan((footPoint.getY() - headPoint.getY()) / (footPoint.getX() - headPoint.getX()))));
         Log.d("SpringView",
                 "headOffsetX : " + headOffsetX + "\n" +
                         "headOffsetY : " + headOffsetY + "\n" +
@@ -114,17 +110,15 @@ public class SpringView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        Log.d("DRAW", "onDrawpaint");
         makePath();
-        canvas.drawCircle(180, 112, 50, paint);
-//        canvas.drawPath(path, paint);
-//        canvas.drawCircle(headPoint.getX(), headPoint.getY(), headPoint.getRadius(), paint);
-//        paint.setColor(Color.YELLOW);
-//        canvas.drawCircle(footPoint.getX(), footPoint.getY(), footPoint.getRadius(), paint);
+        canvas.drawPath(path, paint);
+        canvas.drawCircle(headPoint.getX(), headPoint.getY(), headPoint.getRadius(), paint);
+        paint.setColor(Color.GREEN);
+        canvas.drawCircle(footPoint.getX(), footPoint.getY(), footPoint.getRadius(), paint);
         super.onDraw(canvas);
     }
 
-    public void animCreate(){
+    public void animCreate() {
         setPivotX(getHeadPoint().getX());
         setPivotY(getFootPoint().getY());
         AnimatorSet animatorSet = new AnimatorSet();
@@ -147,11 +141,11 @@ public class SpringView extends View {
         return footPoint;
     }
 
-    public void setIndicatorColor(int color){
+    public void setIndicatorColor(int color) {
         paint.setColor(color);
     }
 
-    public int getIndicatorColor(){
+    public int getIndicatorColor() {
         return paint.getColor();
     }
 }

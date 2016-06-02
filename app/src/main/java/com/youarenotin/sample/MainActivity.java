@@ -1,5 +1,6 @@
 package com.youarenotin.sample;
 
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -26,8 +27,8 @@ public class MainActivity extends AppCompatActivity implements GuideFragment.OnF
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         tb = (Toolbar) findViewById(R.id.toolBar);
-        tb.setTitle("");
-        tb.setBackgroundResource(R.color.colorPrimary);
+        tb.setTitle("粘连式指示器");
+        tb.setTitleTextColor(Color.WHITE);
         setSupportActionBar(tb);
 
         indicator = (AdhesionIndicator) findViewById(R.id.indicator);

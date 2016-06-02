@@ -38,7 +38,7 @@ public class AdhesionIndicator extends FrameLayout {
     private float acceleration = 0.5f;
 
     public AdhesionIndicator(Context context) {
-        super(context);
+        this(context,null);
     }
 
     public AdhesionIndicator(Context context, AttributeSet attrs) {
@@ -99,21 +99,36 @@ public class AdhesionIndicator extends FrameLayout {
                     }
 
                     //x head
-                    float headX = 1.0f;
-                    if (positionOffset < headXOffset) {
-                        headX = (float) (Math.atan((positionOffset / headXOffset) * acceleration * 2 - acceleration) + Math.atan(acceleration) / (2 * Math.abs(acceleration)));
-                    } else {
-                        headX = 1.0f;
+//                    float headX = 1.0f;
+//                    if (positionOffset < headXOffset) {
+//                        headX = (float) (Math.atan((positionOffset / headXOffset) * acceleration * 2 - acceleration) + Math.atan(acceleration) / (2 * Math.atan(acceleration)));
+//                    } else {
+//                        headX = 1.0f;
+//                    }
+//                    springView.getHeadPoint().setX(getTabX(position) + headX / 1.0f * getPositionDistance(position));
+                    float headX = 1f;
+                    if (positionOffset < headXOffset){
+                        float positionOffsetTemp = positionOffset / headXOffset;
+                        headX = (float) ((Math.atan (positionOffsetTemp*acceleration*2 - acceleration ) + (Math.atan(acceleration))) / (2 * (Math.atan(acceleration))));
                     }
-                    springView.getHeadPoint().setX(getTabX(position) + headX / 1.0f * getPositionDistance(position));
+                    springView.getHeadPoint().setX(getTabX(position) + headX * getPositionDistance(position));
                     //x foot
-                    float footX = 1.0f;
-                    if (positionOffset > footXOffset) {
-                        footX = (float) (Math.atan(((positionOffset - footXOffset) / 1 - footXOffset) * 2 * acceleration - acceleration) + Math.atan(acceleration) / 2 * Math.atan(acceleration));
-                    } else {
-                        footX = 1.0f;
+//                    float footX = 0.0f;
+//                    if (positionOffset > footXOffset) {
+////                        footX = (float) (Math.atan(((positionOffset - footXOffset) / 1 - footXOffset) * 2 * acceleration - acceleration) + Math.atan(acceleration) / 2 * Math.atan(acceleration));
+//                        footX = (float) ((Math.atan(((positionOffset- footXOffset) / (1- footXOffset))*acceleration*2 - acceleration ) + (Math.atan(acceleration))) / (2 * (Math.atan(acceleration))));
+//
+//                    } else {
+//                        footX = 0.0f;
+//                    }
+////                    springView.getFootPoint().setX(getTabX(position) + (1.0f - footX) * getPositionDistance(position));
+//                    springView.getFootPoint().setX(getTabX(position) - footX * getPositionDistance(position));
+                    float footX = 0f;
+                    if (positionOffset > footXOffset){
+                        float positionOffsetTemp = (positionOffset- footXOffset) / (1- footXOffset);
+                        footX = (float) ((Math.atan(positionOffsetTemp*acceleration*2 - acceleration ) + (Math.atan(acceleration))) / (2 * (Math.atan(acceleration))));
                     }
-                    springView.getFootPoint().setX(getTabX(position) + (1.0f - footX) * getPositionDistance(position));
+                    springView.getFootPoint().setX(getTabX(position) + footX * getPositionDistance(position));
 
                     //reset radius
                     if (positionOffset == 0) {
@@ -154,13 +169,14 @@ public class AdhesionIndicator extends FrameLayout {
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
-        if (changed){
+//        if (changed){
             View view = tabs.get(viewPager.getCurrentItem());
             springView.getHeadPoint().setX(view.getX()+view.getWidth()/2);
             springView.getHeadPoint().setY(view.getY()+view.getHeight()/2);
             springView.getFootPoint().setX(view.getX()+view.getWidth()/2);
             springView.getFootPoint().setY(view.getY()+view.getHeight()/2);
-        }
+            springView.animCreate();
+//        }
     }
 
     private float getPositionDistance(int position) {
@@ -211,7 +227,7 @@ public class AdhesionIndicator extends FrameLayout {
             tv.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    viewPager.setCurrentItem(finalI, false);
+                    viewPager.setCurrentItem(finalI, true);
                 }
             });
             tabs.add(tv);
