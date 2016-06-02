@@ -54,7 +54,7 @@ public class SpringView extends View {
     }
 
     private void init(){
-//        setAlpha(0.5f);
+        setAlpha(0.5f);
 
         headPoint = new Circle();
         footPoint = new Circle();
@@ -63,18 +63,18 @@ public class SpringView extends View {
 
         paint = new Paint();
         paint.setAntiAlias(true);
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(1);
-        paint.setColor(Color.BLUE);
+        paint.setStyle(Paint.Style.FILL_AND_STROKE);
+        paint.setStrokeWidth(5);
+        paint.setColor(Color.YELLOW);
     }
 
     private void makePath(){
 
-        float headOffsetX = (float) (headPoint.getRadius()* Math.sin(Math.atan((footPoint.getY() - headPoint.getY()) / (footPoint.getX() - headPoint.getX()))));
-        float headOffsetY = (float) (headPoint.getRadius()* Math.cos(Math.atan((footPoint.getY() - headPoint.getY()) / (footPoint.getX() - headPoint.getX()))));
+        float headOffsetX = (float) (headPoint.getRadius()*Math.sin(Math.atan((footPoint.getY()-headPoint.getY()) / (footPoint.getX()-headPoint.getX()))));
+        float headOffsetY = (float) (headPoint.getRadius()*Math.cos(Math.atan((footPoint.getY()-headPoint.getY()) / (footPoint.getX()-headPoint.getX()))));
 
-        float footOffsetX = (float) (footPoint.getRadius()* Math.sin(Math.atan((footPoint.getY() - headPoint.getY()) / (footPoint.getX() - headPoint.getX()))));
-        float footOffsetY = (float) (footPoint.getRadius()* Math.cos(Math.atan((footPoint.getY() - headPoint.getY()) / (footPoint.getX() - headPoint.getX()))));
+        float footOffsetX = (float) (footPoint.getRadius()*Math.sin(Math.atan((footPoint.getY()-headPoint.getY()) / (footPoint.getX()-headPoint.getX()))));
+        float footOffsetY = (float) (footPoint.getRadius()*Math.cos(Math.atan((footPoint.getY()-headPoint.getY()) / (footPoint.getX()-headPoint.getX()))));
         Log.d("SpringView",
                 "headOffsetX : " + headOffsetX + "\n" +
                         "headOffsetY : " + headOffsetY + "\n" +
@@ -114,11 +114,13 @@ public class SpringView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        Log.d("DRAW", "onDrawpaint");
         makePath();
-        canvas.drawPath(path, paint);
-        canvas.drawCircle(headPoint.getX(), headPoint.getY(), headPoint.getRadius(), paint);
-        paint.setColor(Color.YELLOW);
-        canvas.drawCircle(footPoint.getX(), footPoint.getY(), footPoint.getRadius(), paint);
+        canvas.drawCircle(180, 112, 50, paint);
+//        canvas.drawPath(path, paint);
+//        canvas.drawCircle(headPoint.getX(), headPoint.getY(), headPoint.getRadius(), paint);
+//        paint.setColor(Color.YELLOW);
+//        canvas.drawCircle(footPoint.getX(), footPoint.getY(), footPoint.getRadius(), paint);
         super.onDraw(canvas);
     }
 

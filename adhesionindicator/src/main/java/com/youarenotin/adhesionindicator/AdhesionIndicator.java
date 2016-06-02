@@ -109,14 +109,14 @@ public class AdhesionIndicator extends FrameLayout {
                     //x foot
                     float footX = 1.0f;
                     if (positionOffset > footXOffset) {
-                        footX = (float) (Math.atan(((positionOffset - footXOffset) / 1 - footXOffset) * 2 * acceleration - acceleration)+Math.atan(acceleration)/2*Math.atan(acceleration));
+                        footX = (float) (Math.atan(((positionOffset - footXOffset) / 1 - footXOffset) * 2 * acceleration - acceleration) + Math.atan(acceleration) / 2 * Math.atan(acceleration));
                     } else {
                         footX = 1.0f;
                     }
-                    springView.getFootPoint().setX(getTabX(position)+(1.0f-footX)*getPositionDistance(position));
+                    springView.getFootPoint().setX(getTabX(position) + (1.0f - footX) * getPositionDistance(position));
 
                     //reset radius
-                    if (positionOffset==0){
+                    if (positionOffset == 0) {
                         springView.getHeadPoint().setRadius(radiusMin);
                         springView.getFootPoint().setRadius(radiusMax);
                     }
@@ -149,6 +149,18 @@ public class AdhesionIndicator extends FrameLayout {
 
             }
         });
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+        if (changed){
+            View view = tabs.get(viewPager.getCurrentItem());
+            springView.getHeadPoint().setX(view.getX()+view.getWidth()/2);
+            springView.getHeadPoint().setY(view.getY()+view.getHeight()/2);
+            springView.getFootPoint().setX(view.getX()+view.getWidth()/2);
+            springView.getFootPoint().setY(view.getY()+view.getHeight()/2);
+        }
     }
 
     private float getPositionDistance(int position) {
@@ -199,7 +211,7 @@ public class AdhesionIndicator extends FrameLayout {
             tv.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    viewPager.setCurrentItem(finalI, true);
+                    viewPager.setCurrentItem(finalI, false);
                 }
             });
             tabs.add(tv);

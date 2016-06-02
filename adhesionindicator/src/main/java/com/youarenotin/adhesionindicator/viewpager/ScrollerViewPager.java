@@ -3,8 +3,8 @@ package com.youarenotin.adhesionindicator.viewpager;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
-import android.view.animation.OvershootInterpolator;
 import android.widget.Scroller;
 
 import java.lang.reflect.Field;
@@ -39,7 +39,7 @@ public class ScrollerViewPager extends ViewPager {
         try {
             Field filed_mScroller = ViewPager.class.getDeclaredField("mScroller");
             filed_mScroller.setAccessible(true);//viewpager.class中该全局变量是private的
-            FixedSpeedScroller mScroller = new FixedSpeedScroller(getContext(), new OvershootInterpolator());
+            FixedSpeedScroller mScroller = new FixedSpeedScroller(getContext(), new DecelerateInterpolator());
             mScroller.setFixedSpeedScroller(duration);
             filed_mScroller.set(this, mScroller);
         } catch (IllegalAccessException e) {

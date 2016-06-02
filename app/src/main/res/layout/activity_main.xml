@@ -10,7 +10,8 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolBar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize">
+        android:layout_height="?attr/actionBarSize"
+        android:elevation="10dp">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -21,12 +22,19 @@
     <com.youarenotin.adhesionindicator.AdhesionIndicator
         android:id="@+id/indicator"
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="?attr/actionBarSize"
+        app:radiusmax="25dp"
+        app:radiusmin="8dp"
+        app:indicatorcolor="@color/default_indicator_bg"
+        app:textcolor="@color/default_text_color"
+        app:textsize="6sp"
+        app:textbg="@color/textBg">
     </com.youarenotin.adhesionindicator.AdhesionIndicator>
 
     <com.youarenotin.adhesionindicator.viewpager.ScrollerViewPager
         android:id="@+id/vp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:overScrollMode="never">
     </com.youarenotin.adhesionindicator.viewpager.ScrollerViewPager>
 </LinearLayout>
