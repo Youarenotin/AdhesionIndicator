@@ -35,6 +35,7 @@
             app:radiusmin="8dp"
             app:indicatorcolor="@color/default_indicator_bg"
             app:textcolor="@color/default_text_color"
+            app:indicatorcolors="@array/indicatorColors"
             app:textsize="6sp"
            >
         </com.youarenotin.adhesionindicator.AdhesionIndicator>

@@ -1,5 +1,7 @@
 package com.youarenotin.adhesionindicator;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.v4.view.ViewPager;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
  * 邮箱：lubo_wen@126.com
  */
 public class AdhesionIndicator extends FrameLayout {
+    private static final int ANIMATOR_DURATION = 3000;
     private int textColor;
     private int selected_textColor;
     private int indicatorBgColor;
@@ -36,9 +39,10 @@ public class AdhesionIndicator extends FrameLayout {
     private float headXOffset = 0.6f;
     private float footXOffset = 1 - headXOffset;
     private float acceleration = 0.5f;
+    private ObjectAnimator animator;
 
     public AdhesionIndicator(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public AdhesionIndicator(Context context, AttributeSet attrs) {
@@ -107,9 +111,9 @@ public class AdhesionIndicator extends FrameLayout {
 //                    }
 //                    springView.getHeadPoint().setX(getTabX(position) + headX / 1.0f * getPositionDistance(position));
                     float headX = 1f;
-                    if (positionOffset < headXOffset){
+                    if (positionOffset < headXOffset) {
                         float positionOffsetTemp = positionOffset / headXOffset;
-                        headX = (float) ((Math.atan (positionOffsetTemp*acceleration*2 - acceleration ) + (Math.atan(acceleration))) / (2 * (Math.atan(acceleration))));
+                        headX = (float) ((Math.atan(positionOffsetTemp * acceleration * 2 - acceleration) + (Math.atan(acceleration))) / (2 * (Math.atan(acceleration))));
                     }
                     springView.getHeadPoint().setX(getTabX(position) + headX * getPositionDistance(position));
                     //x foot
@@ -124,9 +128,9 @@ public class AdhesionIndicator extends FrameLayout {
 ////                    springView.getFootPoint().setX(getTabX(position) + (1.0f - footX) * getPositionDistance(position));
 //                    springView.getFootPoint().setX(getTabX(position) - footX * getPositionDistance(position));
                     float footX = 0f;
-                    if (positionOffset > footXOffset){
-                        float positionOffsetTemp = (positionOffset- footXOffset) / (1- footXOffset);
-                        footX = (float) ((Math.atan(positionOffsetTemp*acceleration*2 - acceleration ) + (Math.atan(acceleration))) / (2 * (Math.atan(acceleration))));
+                    if (positionOffset > footXOffset) {
+                        float positionOffsetTemp = (positionOffset - footXOffset) / (1 - footXOffset);
+                        footX = (float) ((Math.atan(positionOffsetTemp * acceleration * 2 - acceleration) + (Math.atan(acceleration))) / (2 * (Math.atan(acceleration))));
                     }
                     springView.getFootPoint().setX(getTabX(position) + footX * getPositionDistance(position));
 
@@ -143,6 +147,8 @@ public class AdhesionIndicator extends FrameLayout {
                     springView.getFootPoint().setX(getTabX(position));
                 }
 
+                float persent = (position + positionOffset) / viewPager.getAdapter().getCount();
+                createValueAnimator(persent);
                 springView.postInvalidate();
             }
 
@@ -170,13 +176,30 @@ public class AdhesionIndicator extends FrameLayout {
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
 //        if (changed){
-            View view = tabs.get(viewPager.getCurrentItem());
-            springView.getHeadPoint().setX(view.getX()+view.getWidth()/2);
-            springView.getHeadPoint().setY(view.getY()+view.getHeight()/2);
-            springView.getFootPoint().setX(view.getX()+view.getWidth()/2);
-            springView.getFootPoint().setY(view.getY()+view.getHeight()/2);
-            springView.animCreate();
+        View view = tabs.get(viewPager.getCurrentItem());
+        springView.getHeadPoint().setX(view.getX() + view.getWidth() / 2);
+        springView.getHeadPoint().setY(view.getY() + view.getHeight() / 2);
+        springView.getFootPoint().setX(view.getX() + view.getWidth() / 2);
+        springView.getFootPoint().setY(view.getY() + view.getHeight() / 2);
+        springView.animCreate();
 //        }
+    }
+
+    private void createValueAnimator(float persent) {
+        if (animator == null) {
+            int[] arrays = new int[0];
+            if (indicatorBgColors != 0) {
+                arrays = getResources().getIntArray(indicatorBgColors);
+            }
+            if (arrays.length <= 0) {
+                throw new IllegalArgumentException("xml布局中请添加indeicatorcolors属性");
+            }
+            animator = ObjectAnimator.ofInt(springView, "indicatorColor", arrays);
+            animator.setEvaluator(new ArgbEvaluator());
+            animator.setDuration(ANIMATOR_DURATION);
+//            animator.start();
+        }
+        animator.setCurrentPlayTime((long) (ANIMATOR_DURATION * persent));
     }
 
     private float getPositionDistance(int position) {

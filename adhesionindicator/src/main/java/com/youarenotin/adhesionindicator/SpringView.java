@@ -24,7 +24,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
 
@@ -59,7 +58,7 @@ public class SpringView extends View {
 
         paint = new Paint();
         paint.setAntiAlias(true);
-        paint.setStyle(Paint.Style.STROKE);
+        paint.setStyle(Paint.Style.FILL_AND_STROKE);
         paint.setStrokeWidth(5);
         paint.setColor(Color.YELLOW);
     }
@@ -71,20 +70,7 @@ public class SpringView extends View {
 
         float footOffsetX = (float) (footPoint.getRadius() * Math.sin(Math.atan((footPoint.getY() - headPoint.getY()) / (footPoint.getX() - headPoint.getX()))));
         float footOffsetY = (float) (footPoint.getRadius() * Math.cos(Math.atan((footPoint.getY() - headPoint.getY()) / (footPoint.getX() - headPoint.getX()))));
-        Log.d("SpringView",
-                "headOffsetX : " + headOffsetX + "\n" +
-                        "headOffsetY : " + headOffsetY + "\n" +
-                        "footOffsetX : " + footOffsetX + "\n" +
-                        "footOffsetY ; " + footOffsetY
-        );
-//        float headOffsetX =10;
-//        float headOffsetY =10;
-//        float footOffsetX =10;
-//        float footOffsetY =10;
-        Log.d("11111", "headPoint.getX() :" + headPoint.getX());
-        Log.d("11111", "headPoint.gety() :" + headPoint.getY());
-        Log.d("11111", "footPoint.getX() :" + footPoint.getX());
-        Log.d("11111", "footPoint.getY() :" + footPoint.getY());
+
         float x1 = headPoint.getX() - headOffsetX;
         float y1 = headPoint.getY() + headOffsetY;
 
@@ -113,7 +99,6 @@ public class SpringView extends View {
         makePath();
         canvas.drawPath(path, paint);
         canvas.drawCircle(headPoint.getX(), headPoint.getY(), headPoint.getRadius(), paint);
-        paint.setColor(Color.GREEN);
         canvas.drawCircle(footPoint.getX(), footPoint.getY(), footPoint.getRadius(), paint);
         super.onDraw(canvas);
     }
@@ -141,7 +126,7 @@ public class SpringView extends View {
         return footPoint;
     }
 
-    public void setIndicatorColor(int color) {
+    public void setIndicatorColor(int color){
         paint.setColor(color);
     }
 
