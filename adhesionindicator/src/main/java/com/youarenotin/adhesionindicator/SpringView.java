@@ -59,7 +59,7 @@ public class SpringView extends View {
 
         paint = new Paint();
         paint.setAntiAlias(true);
-        paint.setStyle(Paint.Style.STROKE);
+        paint.setStyle(Paint.Style.FILL_AND_STROKE);
         paint.setStrokeWidth(5);
         paint.setColor(Color.YELLOW);
     }
